@@ -1,7 +1,6 @@
 import { X, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import { useBookConsultation } from "../../hooks/useBookConsultation";
-import { ToastContainer, toast } from "react-toastify";
 
 interface ModalProps {
   isOpen: boolean;
