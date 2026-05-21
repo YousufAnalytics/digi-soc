@@ -1,15 +1,8 @@
 import { ChevronDown, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import Modal from "../ui/Modal";
-import { Link } from "react-router-dom";
-
-// const services = [
-//   "Website Design",
-//   "SEO",
-//   "Lead Generation",
-//   "Social Media Marketing",
-//   "Content Writing",
-// ];
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const services = [
   { name: "Website Design", link: "website-design" },
@@ -21,6 +14,11 @@ const services = [
 
 export default function Header() {
   const [openModal, setOpenModal] = useState(false);
+  const [nofification, setNotification] = useState(false);
+
+  const location = useLocation();
+
+  const isServicesActive = location.pathname.startsWith("/services");
   return (
     <>
       <header className="fixed z-50 w-full border-b border-gray-100 bg-white">
@@ -42,12 +40,27 @@ export default function Header() {
 
           {/* Navigation */}
           <nav className="hidden items-center gap-10 lg:flex">
-            <Link to="/" className="text-sm font-medium text-indigo-600">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `text-sm font-medium transition ${
+                  isActive
+                    ? "text-indigo-600"
+                    : "text-gray-700 hover:text-indigo-600"
+                }`
+              }
+            >
               Home
-            </Link>
+            </NavLink>
             {/* Services Dropdown */}
             <div className="group relative cursor-pointer">
-              <div className="flex items-center gap-1 text-sm font-medium text-gray-700 transition hover:text-indigo-600">
+              <div
+                className={`flex items-center gap-1 text-sm font-medium transition ${
+                  isServicesActive
+                    ? "text-indigo-600"
+                    : "text-gray-700 hover:text-indigo-600"
+                }`}
+              >
                 Services
                 <ChevronDown size={18} className="relative top-[1px]" />
               </div>
@@ -56,7 +69,7 @@ export default function Header() {
                 {services.map((service) => (
                   <Link
                     key={service.name}
-                    to={`services/${service.link}`}
+                    to={`/services/${service.link}`}
                     className="block rounded-xl px-4 py-3 text-sm text-gray-700 transition hover:bg-gray-50 hover:text-indigo-600"
                   >
                     {service.name}
@@ -64,31 +77,54 @@ export default function Header() {
                 ))}
               </div>
             </div>
-
-            <Link
+            <NavLink
               to="/about"
-              className="text-sm font-medium text-gray-700 transition hover:text-indigo-600"
+              className={({ isActive }) =>
+                `text-sm font-medium transition ${
+                  isActive
+                    ? "text-indigo-600"
+                    : "text-gray-700 hover:text-indigo-600"
+                }`
+              }
             >
               About Us
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/case-studies"
-              className="text-sm font-medium text-gray-700 transition hover:text-indigo-600"
+              className={({ isActive }) =>
+                `text-sm font-medium transition ${
+                  isActive
+                    ? "text-indigo-600"
+                    : "text-gray-700 hover:text-indigo-600"
+                }`
+              }
             >
               Case Studies
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/blog"
-              className="text-sm font-medium text-gray-700 transition hover:text-indigo-600"
+              className={({ isActive }) =>
+                `text-sm font-medium transition ${
+                  isActive
+                    ? "text-indigo-600"
+                    : "text-gray-700 hover:text-indigo-600"
+                }`
+              }
             >
               Blog
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/contact-us"
-              className="text-sm font-medium text-gray-700 transition hover:text-indigo-600"
+              className={({ isActive }) =>
+                `text-sm font-medium transition ${
+                  isActive
+                    ? "text-indigo-600"
+                    : "text-gray-700 hover:text-indigo-600"
+                }`
+              }
             >
               Contact
-            </Link>
+            </NavLink>
           </nav>
 
           {/* CTA Button */}
@@ -101,7 +137,15 @@ export default function Header() {
           </button>
         </div>
       </header>
-      <Modal isOpen={openModal} onClose={() => setOpenModal(false)} />
+      <Modal
+        isOpen={openModal}
+        onClose={() => setOpenModal(false)}
+        onSuccess={() => {
+          setNotification(true);
+          toast("works");
+        }}
+      />
+      {nofification && <ToastContainer />}
     </>
   );
 }

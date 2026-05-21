@@ -127,7 +127,7 @@ export default function Footer() {
           <h4 className="text-lg font-semibold">Contact</h4>
 
           <div className="mt-6 space-y-4 text-gray-400">
-            <p>yousuf@digisoc.in</p>
+            <p>info@digisoc.in</p>
 
             <p>+91 78424 16166</p>
 

@@ -1,12 +1,130 @@
 import { X, ArrowUpRight } from "lucide-react";
+import { useState } from "react";
+import { useBookConsultation } from "../../hooks/useBookConsultation";
+import { ToastContainer, toast } from "react-toastify";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess: () => void;
 }
 
-const Modal = ({ isOpen, onClose }: ModalProps) => {
+interface BookConsultation {
+  name: string;
+  phoneNumber: string;
+  companyName: string;
+  email: string;
+  serviceType: string;
+  businessGoals: string;
+}
+
+const Modal = ({ isOpen, onClose, onSuccess }: ModalProps) => {
   if (!isOpen) return null;
+  const { mutate, isPending } = useBookConsultation();
+
+  const [consultation, setConsultation] = useState<BookConsultation>({
+    name: "",
+    phoneNumber: "",
+    companyName: "",
+    email: "",
+    serviceType: "",
+    businessGoals: "",
+  });
+
+  const [errors, setErrors] = useState<BookConsultation>({
+    name: "",
+    phoneNumber: "",
+    companyName: "",
+    email: "",
+    serviceType: "",
+    businessGoals: "",
+  });
+
+  const bookConsultationHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const isValid = validateForm();
+
+    console.log(isValid);
+
+    if (!isValid) return;
+
+    const payload = {
+      name: consultation.name,
+      number: consultation.phoneNumber,
+      companyName: consultation.companyName,
+      email: consultation.email,
+      serviceType: consultation.serviceType,
+      businessGoals: consultation.businessGoals,
+    };
+
+    mutate(payload, {
+      onSuccess: () => {
+        setConsultation({
+          name: "",
+          phoneNumber: "",
+          companyName: "",
+          email: "",
+          serviceType: "",
+          businessGoals: "",
+        });
+
+        onClose();
+        onSuccess();
+      },
+
+      onError: (error) => {
+        console.error(error);
+
+        alert("Something went wrong");
+      },
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      name: "",
+      phoneNumber: "",
+      companyName: "",
+      email: "",
+      serviceType: "",
+      businessGoals: "",
+    };
+
+    let isValid = true;
+
+    if (!consultation.name.trim()) {
+      newErrors.name = "Full name is required";
+      isValid = false;
+    }
+
+    if (!consultation.phoneNumber.trim()) {
+      newErrors.phoneNumber = "Phone number is required";
+      isValid = false;
+    }
+
+    if (!consultation.companyName.trim()) {
+      newErrors.companyName = "Business name is required";
+      isValid = false;
+    }
+
+    if (!consultation.email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    }
+
+    if (!consultation.serviceType.trim()) {
+      newErrors.serviceType = "Please select a service";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+
+    console.log(newErrors);
+    console.log(isValid);
+
+    return isValid;
+  };
 
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
@@ -122,7 +240,7 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
             </div>
 
             {/* Form */}
-            <form className="mt-7 space-y-4">
+            <form className="mt-7 space-y-4" onSubmit={bookConsultationHandler}>
               {/* Row */}
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
@@ -132,9 +250,28 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
 
                   <input
                     type="text"
+                    value={consultation.name}
+                    onChange={(e) => {
+                      setConsultation({
+                        ...consultation,
+                        name: e.target.value,
+                      });
+
+                      setErrors({
+                        ...errors,
+                        name: "",
+                      });
+                    }}
                     placeholder="Enter your full name"
-                    className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-violet-400"
+                    className={`w-full rounded-2xl bg-white px-4 py-3 text-sm outline-none transition ${
+                      errors.name
+                        ? "border border-red-500 focus:border-red-500"
+                        : "border border-gray-200 focus:border-violet-400"
+                    }`}
                   />
+                  {errors.name && (
+                    <p className="mt-1 text-xs text-red-500">{errors.name}</p>
+                  )}
                 </div>
 
                 <div>
@@ -144,9 +281,30 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
 
                   <input
                     type="text"
+                    value={consultation.phoneNumber}
+                    onChange={(e) => {
+                      setConsultation({
+                        ...consultation,
+                        phoneNumber: e.target.value,
+                      });
+
+                      setErrors({
+                        ...errors,
+                        phoneNumber: "",
+                      });
+                    }}
                     placeholder="Enter your phone number"
-                    className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-violet-400"
+                    className={`w-full rounded-2xl bg-white px-4 py-3 text-sm outline-none transition ${
+                      errors.phoneNumber
+                        ? "border border-red-500 focus:border-red-500"
+                        : "border border-gray-200 focus:border-violet-400"
+                    }`}
                   />
+                  {errors.phoneNumber && (
+                    <p className="mt-1 text-xs text-red-500">
+                      {errors.phoneNumber}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -159,9 +317,30 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
 
                   <input
                     type="text"
+                    value={consultation.companyName}
+                    onChange={(e) => {
+                      setConsultation({
+                        ...consultation,
+                        companyName: e.target.value,
+                      });
+
+                      setErrors({
+                        ...errors,
+                        companyName: "",
+                      });
+                    }}
                     placeholder="Enter your business name"
-                    className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-violet-400"
+                    className={`w-full rounded-2xl bg-white px-4 py-3 text-sm outline-none transition ${
+                      errors.companyName
+                        ? "border border-red-500 focus:border-red-500"
+                        : "border border-gray-200 focus:border-violet-400"
+                    }`}
                   />
+                  {errors.companyName && (
+                    <p className="mt-1 text-xs text-red-500">
+                      {errors.companyName}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -171,16 +350,53 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
 
                   <input
                     type="email"
+                    value={consultation.email}
+                    onChange={(e) => {
+                      setConsultation({
+                        ...consultation,
+                        email: e.target.value,
+                      });
+
+                      setErrors({
+                        ...errors,
+                        email: "",
+                      });
+                    }}
                     placeholder="Enter your email address"
-                    className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-violet-400"
+                    className={`w-full rounded-2xl bg-white px-4 py-3 text-sm outline-none transition ${
+                      errors.email
+                        ? "border border-red-500 focus:border-red-500"
+                        : "border border-gray-200 focus:border-violet-400"
+                    }`}
                   />
+                  {errors.companyName && (
+                    <p className="mt-1 text-xs text-red-500">
+                      {errors.companyName}
+                    </p>
+                  )}
                 </div>
               </div>
 
               <div className="mb-2">
                 <select
+                  value={consultation.serviceType}
+                  onChange={(e) => {
+                    setConsultation({
+                      ...consultation,
+                      serviceType: e.target.value,
+                    });
+
+                    setErrors({
+                      ...errors,
+                      serviceType: "",
+                    });
+                  }}
                   defaultValue=""
-                  className="select w-full rounded-2xl border border-gray-200 bg-white px-6 py-3 text-sm outline-none transition focus:border-violet-400"
+                  className={`w-full rounded-2xl bg-white px-6 py-3 text-sm outline-none transition ${
+                    errors.serviceType
+                      ? "border border-red-500 focus:border-red-500"
+                      : "border border-gray-200 focus:border-violet-400"
+                  }`}
                 >
                   <option value="" disabled>
                     Select a service
@@ -197,6 +413,11 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
                     AI Marketing Solutions
                   </option>
                 </select>
+                {errors.serviceType && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.serviceType}
+                  </p>
+                )}
               </div>
 
               {/* Textarea */}
@@ -227,9 +448,10 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
               {/* CTA */}
               <button
                 type="submit"
+                disabled={isPending}
                 className="group mt-2 flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-500 px-6 py-4 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.01] cursor-pointer"
               >
-                Book Free Consultation
+                {isPending ? "Submitting..." : "Book Free Consultation"}
                 <ArrowUpRight
                   size={18}
                   className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
