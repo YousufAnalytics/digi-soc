@@ -89,7 +89,7 @@ export default function Header() {
             >
               About Us
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/case-studies"
               className={({ isActive }) =>
                 `text-sm font-medium transition ${
@@ -112,7 +112,7 @@ export default function Header() {
               }
             >
               Blog
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to="/contact-us"
               className={({ isActive }) =>
