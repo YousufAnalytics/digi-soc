@@ -4,7 +4,7 @@ import Footer from "../sections/Footer";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen bg-[#fcfcfd]">
+    <div className="min-h-screen bg-[#fcfcfd] overflow-x-hidden">
       <Header />
       <main className="pt-20">
         <Outlet />
