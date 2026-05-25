@@ -237,7 +237,9 @@ export default function Header() {
         onClose={() => setOpenModal(false)}
         onSuccess={() => {
           setNotification(true);
-          toast("works");
+          toast(
+            "Your consultation request has been received, We'll contact you within 24 hours.",
+          );
         }}
       />
       {nofification && <ToastContainer />}
