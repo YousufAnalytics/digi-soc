@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 
 import { FaInstagram, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -28,13 +29,13 @@ export default function Footer() {
           </div>
 
           {/* CTA Button */}
-          <button className="group flex items-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 px-8 py-5 text-sm font-semibold text-white shadow-xl transition-all duration-300 hover:scale-[1.02]">
+          {/* <button className="group flex items-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 px-8 py-5 text-sm font-semibold text-white shadow-xl transition-all duration-300 hover:scale-[1.02]">
             Book Free Consultation
             <ArrowUpRight
               size={18}
               className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
             />
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -66,27 +67,36 @@ export default function Footer() {
 
           <ul className="mt-6 space-y-4 text-gray-400">
             <li>
-              <a href="#" className="transition hover:text-white">
+              <Link
+                to="/services/website-design"
+                className="transition hover:text-white"
+              >
                 Website Design
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a href="#" className="transition hover:text-white">
+              <Link to="/services/seo" className="transition hover:text-white">
                 SEO Optimization
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a href="#" className="transition hover:text-white">
+              <Link
+                to="/services/lead-generation"
+                className="transition hover:text-white"
+              >
                 Lead Generation
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a href="#" className="transition hover:text-white">
+              <Link
+                to="/services/social-media-marketing"
+                className="transition hover:text-white"
+              >
                 Social Media Marketing
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -97,27 +107,27 @@ export default function Footer() {
 
           <ul className="mt-6 space-y-4 text-gray-400">
             <li>
-              <a href="#" className="transition hover:text-white">
+              <Link to="/about" className="transition hover:text-white">
                 About Us
-              </a>
+              </Link>
             </li>
 
-            <li>
+            {/* <li>
               <a href="#" className="transition hover:text-white">
                 Case Studies
               </a>
-            </li>
+            </li> */}
 
-            <li>
+            {/* <li>
               <a href="#" className="transition hover:text-white">
                 Blog
               </a>
-            </li>
+            </li> */}
 
             <li>
-              <a href="#" className="transition hover:text-white">
+              <Link to="/contact-us" className="transition hover:text-white">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
