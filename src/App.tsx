@@ -11,11 +11,13 @@ import SocialMediaMarketing from "./pages/SocialMediaMarketing";
 import ContentWriting from "./pages/ContentWriting";
 import SearchEngineOptimization from "./pages/SearchEngineOptimization";
 import Layout from "./components/layout/Layout";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
