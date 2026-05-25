@@ -1,5 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
-
 import { FaInstagram, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
