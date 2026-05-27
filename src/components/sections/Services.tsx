@@ -4,8 +4,9 @@ import {
   Megaphone,
   PenTool,
   ChartNoAxesCombined,
-  Sparkles,
 } from "lucide-react";
+
+import { Link } from "react-router-dom";
 
 const services = [
   {
@@ -13,6 +14,7 @@ const services = [
     description:
       "Modern, responsive websites crafted to build trust and convert visitors into customers.",
     icon: Globe,
+    link: "website-design",
   },
 
   {
@@ -20,34 +22,28 @@ const services = [
     description:
       "Improve your visibility on Google and attract high-intent organic traffic.",
     icon: Search,
+    link: "seo",
   },
-
-  {
-    title: "Lead Generation",
-    description:
-      "Performance-driven campaigns designed to generate qualified business leads.",
-    icon: ChartNoAxesCombined,
-  },
-
-  {
-    title: "Social Media Marketing",
-    description:
-      "Build brand awareness and engagement across Instagram, Facebook, and LinkedIn.",
-    icon: Megaphone,
-  },
-
   {
     title: "Content Writing",
     description:
       "SEO-focused content and persuasive copywriting tailored for your business growth.",
     icon: PenTool,
+    link: "content-writing",
   },
-
   {
-    title: "AI Marketing Solutions",
+    title: "Social Media Marketing",
     description:
-      "Leverage AI-driven automation and insights to scale your marketing efficiently.",
-    icon: Sparkles,
+      "Build brand awareness and engagement across Instagram, Facebook, and LinkedIn.",
+    icon: Megaphone,
+    link: "social-media-marketing",
+  },
+  {
+    title: "Lead Generation",
+    description:
+      "Performance-driven campaigns designed to generate qualified business leads.",
+    icon: ChartNoAxesCombined,
+    link: "lead-generation",
   },
 ];
 
@@ -96,9 +92,12 @@ export default function Services() {
                 </p>
 
                 {/* Learn More */}
-                <button className="mt-8 text-sm font-semibold text-indigo-600 transition hover:text-violet-500">
+                <Link
+                  to={`/services/${service.link}`}
+                  className="mt-8 text-sm font-semibold text-indigo-600 transition hover:text-violet-500"
+                >
                   Learn More →
-                </button>
+                </Link>
               </div>
             );
           })}
