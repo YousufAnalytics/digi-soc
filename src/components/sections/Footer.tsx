@@ -138,8 +138,6 @@ export default function Footer() {
             <p>info@digisoc.in</p>
 
             <p>+91 78424 16166</p>
-
-            <p>Guntur & Vijayawada, India</p>
           </div>
 
           {/* Socials */}

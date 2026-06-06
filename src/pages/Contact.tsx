@@ -38,12 +38,6 @@ const Contact = () => {
               <h3 className="text-lg font-semibold text-gray-900">
                 Service Areas
               </h3>
-              <p className="mt-3 text-gray-600">
-                Guntur
-                <br />
-                Vijayawada
-                <br />
-              </p>
             </div>
 
             <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
